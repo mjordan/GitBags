@@ -75,21 +75,13 @@ In this example, I modify the contents of the GitBag's /data directory (it's pay
 
 The steps I performed from within the GitBag's directory are:
 
-[Edit/modify the payload files]
-[Update the Bag's manifests]
-`commit -am "Did something important to the payload."`
+* [Edit/modify the payload files]
+* [Update the Bag's manifests]
+* `commit -am "Did something important to the payload."`
 
 Later, I use `git log` or 'git reflog show` to see the history of actions on the Bag:
 
 ```
-2215aa5 HEAD@{0}: commit: Updated the contents of the Bag.
+2215aa5 HEAD@{0}: commit: Did something important to the payload.
 3a7b3c0 HEAD@{1}: clone: from /home/mark/Documents/hacking/bagit/mybagdir/
 ```
-
- 
-
-
-
-
-
-
