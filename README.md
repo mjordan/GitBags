@@ -73,7 +73,7 @@ No. Bags that contain .git directories validate. Also, a GitBag is just a Bag - 
 
 In this example, I modify the contents of the GitBag's payload (the files in its /data directory). Before I do anything to the GitBag's payload, I clone the GitBag to create a working copy. Then, I update the payload and regnerate the Bag (or update its manifests). Next, I perform a `git commit` on the GitBag. Finally, I replace the original GitBag with the updated working copy. Here are those actions expressed as a series of steps I perform from within the GitBag's directory:
 
-* git clone mybagdir workingcopy
+* `git clone mybagdir workingcopy`
 * [Edit/modify the payload files]
 * [Update the Bag's manifests]
 * `commit -am "Did something important to the payload."`
