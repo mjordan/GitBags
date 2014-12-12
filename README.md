@@ -79,7 +79,7 @@ The steps I performed from within the GitBag's directory are:
 * [Update the Bag's manifests]
 * `commit -am "Did something important to the payload."`
 
-Later, I use `git log` or 'git reflog show` to see the history of actions on the Bag:
+Later, I use `git log` or `git reflog show`to see the history of actions on the Bag:
 
 ```
 2215aa5 HEAD@{0}: commit: Did something important to the payload.
