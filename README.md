@@ -52,6 +52,7 @@ mybagdir/
 Why would you do this? Several potential reasons:
 
 1. you want to record all changes to the content of a Bag
+1. you get a built-in tool for viewing the history of actions taken on a Bag: `git reflog show`
 1. the Bag can be cloned using any of Git's transport mechanisms, facilitating easy duplication and synchronisation of Bags across networks and tracking of workflows using the reflog
 1. Git's hooks offer a mechanism for logging to external services, email notifications, etc.
 
