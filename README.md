@@ -194,3 +194,5 @@ If your application doesn't require versioning of your payload files, and you do
 ## License
 
 ![This work is in the Public Domain](http://i.creativecommons.org/p/mark/1.0/88x31.png)
+
+To the extent possible under law, Mark Jordan has waived all copyright and related or neighboring rights to this work. This work is published from: Canada. 
