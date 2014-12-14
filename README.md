@@ -70,7 +70,7 @@ Some include:
 
 Yes. A GitBag is just a Bag with a .git directory. Bags that contain .git directories validate, and if you remove the .git directory, the Bag still validates (which is why having those redundant SHA1 hashes around is good). 
 
-## A example workflow
+## An example workflow
 
 In this example, I modify the contents of the GitBag's payload (the files in its /data directory). Before I do anything to the GitBag's payload, I clone the GitBag to create a working copy. Then, I update the payload and regnerate the Bag (or update its manifests). Next, I perform a `git commit` on the GitBag. Finally, I replace the original GitBag with the updated working copy. Here are those actions expressed as a series of steps I perform from within the GitBag's directory:
 
@@ -93,11 +93,11 @@ This workflow can easily be scripted. For instance, Python provides libraries fo
 
 There is one requirement in GitBag workflows: all Git operations need to be performed after the Bag has been created or modified. Otherwise, the .git directory will be added to the payload. You don't want this since 1) only Bag's payload and not its manifests or tagfiles would be under Git's control and 2) you would likely invalidate your Bag if you performed any Git operations that write to its directory. So, in practice, you should always create the Bag first (or take an existing Bag), then initialize the Git repo, and modify the Bag's payload or tagfiles, then commit the changes using Git. Bag operations, then GIt operations. Bag, then Git.
 
-## "Light" GitBags
+## Light GitBags
 
-Even Linus Torvalds admits that Git "[sucks](http://osdir.com/ml/git/2009-05/msg00051.html)" at handling big files. Basically, the larger the file, the longer Git operations like `add` take. This is a problem, since many Bags will contain fairly large numbers of big files. One work around for this problem is to create "light" GitBags. All this means is that you add only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) to your Git repo, and not the files in your Bag's payload files.
+Even Linus Torvalds admits that Git "[sucks](http://osdir.com/ml/git/2009-05/msg00051.html)" at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since many Bags will contain fairly large numbers of big files. One work around for this problem is to create "light" GitBags. All this means is that you add only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) to your Git repo, and not the payload files in your Bag's /data directory.
 
-Since all changes to the checksums generated for payload files are recorded in the manifest files (and in bag-info.txt if you use the Payload-Oxum tag), Git is still able to track changes to payload files. The disadvantage of this approach is that the payload files are not versioned. So, you will be able to tell if a payload file was modifed, but not retrieve the pre-modified version of the file.
+Any modification to a payload file will result in a new checksum, so updating the manifests for a Bag will result in a change to the manifest files (and in bag-info.txt if you use the Payload-Oxum tag). For his reason, Git is still able to track changes to payload files even if the payload files are not included in the Git repo. An additional benefit of light GitBags is that they won't get nearly as large as GitBags that version large files. The disadvantage of light GitBags is that the payload files are not versioned. In other words, you will be able to tell if a payload file was modifed, but not retrieve the pre-modified version of the file.
 
 Here is an example of creating a light GitBag. I have a Bag with the following contents:
 
@@ -123,7 +123,7 @@ Here is an example of creating a light GitBag. I have a Bag with the following c
 └── tagmanifest-md5.txt
 ```
 
-I convert this Bag to a GitBag by initializing a repo in the 1930-02-10 folder, and then `git add` only the text files. I then modify one of the .tif files (in this example, data/1930-02-10-05.tif) and update the Bag's manifests using my favorite BagIt tool.
+I convert this Bag to a GitBag by initializing a repo in the 1930-02-10 folder, and then `git add` only the .txt files. I then modify one of the .tif files (in this example, data/1930-02-10-05.tif) and update the Bag's manifests using my favorite BagIt tool.
 
 If I do a `git diff` on my GitBag after updating the manifests, I get the following:
 
@@ -153,7 +153,7 @@ index 143df4a..723eefa 100644
  7c295cc2f92f46f411e2b63e4ae025dc  data/1930-02-10-08.tif
 ```
 
-As you can see, the changes in bag-info.txt and manifest-md5.txt document the modification to my payload file. If I want to reveal the changes made to my GitBag later, I can use ``git reflog show`` (or `git log`) and then show the change in the tagfiles introduced in the commit:
+As you can see, the changes in bag-info.txt and manifest-md5.txt document the modification to my payload file. If I want to reveal the changes made to my GitBag later, I can use ``git reflog show`` (or `git log`) and then reveal the details of the change in the tagfiles introduced in the commit:
 
 ```
 git reflog show
@@ -185,7 +185,7 @@ index 143df4a..723eefa 100644
  7c295cc2f92f46f411e2b63e4ae025dc  data/1930-02-10-08.tif
 ```
 
-If your application doesn't require versioning of your payload files, using light GitBags is a good option. An additional benefit is that the GitBags won't get nearly as large as GitBags that do version large files.
+If your application doesn't require versioning of your payload files, using light GitBags is a good option. 
 
 ## License
 
