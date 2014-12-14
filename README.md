@@ -1,6 +1,6 @@
 # GitBags
 
-A GitBag is a [Bag](https://tools.ietf.org/html/draft-kunze-bagit-05) that is contained within a Git repository. For example, for a Bag within a directory named 'mybagdir,' you have this:
+A GitBag is a [Bag](https://tools.ietf.org/html/draft-kunze-bagit-05) that is contained within a Git repository. For example, for a Bag in a directory named 'mybagdir,' you have this:
 
 ```
 mybagdir/
@@ -52,8 +52,8 @@ mybagdir/
 
 Several potential reasons:
 
-1. you want to record all changes to the content of a Bag
-1. you get a built-in tool for viewing the history of actions taken on a Bag: `git reflog show`
+1. you want to record all changes to the content (tagfiles and payload) of a Bag
+1. you get a built-in tool for viewing the history of actions taken on a Bag: `git log` or `git reflog show`
 1. the Bag can be cloned using any of Git's transport mechanisms, allowing easy duplication and synchronisation of Bags across networks and tracking of workflows using the reflog
 1. Git's hooks offer a mechanism for logging to external services, email notifications, etc.
 
@@ -61,14 +61,14 @@ Several potential reasons:
 
 Some include:
 
-1. since Git generates SHA1 checksums for all files, SHA1 checksums in BagIt manifests are redundant (but see below)
+1. since Git generates SHA1 checksums for all files, SHA1 checksums in BagIt manifests are redundant (but see "Are GitBags standard Bags?" below)
 1. Git operations such as diff are not practical on binary files
-1. Git is known not to scale well, so the larger the files in the Bag, the slower Git operations will be (see "Light GitBags" below)
+1. Git is known not to scale well, so the larger the files in the Bag, the slower Git operations will be (but see "Light GitBags" below)
 1. the size of a GitBag is larger than the equivalent non-Git Bagi (also see "Light GitBags" below).
 
 ## Are GitBags standard Bags?
 
-Yes. A GitBag is just a Bag with a .git directory. Bags that contain .git directories validate, and if you remove the .git directory, the Bag still validates (which is why having those redundant SHA1 hashes around is good). 
+Yes. A GitBag is just a Bag with a .git subdirectory within the top-level Bag directory. Bags that contain .git directories validate, and if you remove the .git directory, the Bag still validates (which is why having those redundant SHA1 hashes around is good). 
 
 ## An example workflow
 
@@ -91,13 +91,15 @@ Later, I use `git log` or `git reflog show` to see the history of actions on the
 
 This workflow can easily be scripted. For instance, Python provides libraries for [creating Bags](https://github.com/LibraryOfCongress/bagit-python) and [manipulating Git repositories](https://gitorious.org/git-python).
 
-There is one requirement in GitBag workflows: all Git operations need to be performed after the Bag has been created or modified. Otherwise, the .git directory will be added to the payload. You don't want this since 1) only Bag's payload and not its manifests or tagfiles would be under Git's control and 2) you would likely invalidate your Bag if you performed any Git operations that write to its directory. So, in practice, you should always create the Bag first (or take an existing Bag), then initialize the Git repo, and modify the Bag's payload or tagfiles, then commit the changes using Git. Bag operations, then GIt operations. Bag, then Git.
+There is one requirement in GitBag workflows: all Git operations need to be performed after the Bag has been created or modified. Otherwise, the .git directory will be added to the payload. You don't want this since 1) only Bag's payload and not its manifests or tagfiles would be under Git's control and 2) you would likely invalidate your Bag if you performed any Git operations that write to its directory. So, in practice, you should always create the Bag first (or take an existing Bag), then initialize the Git repo, and modify the Bag's payload or tagfiles, then commit the changes using Git. Bag operations, then Git operations.
 
 ## Light GitBags
 
-Even Linus Torvalds admits that Git "[sucks](http://osdir.com/ml/git/2009-05/msg00051.html)" at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since many Bags will contain fairly large numbers of big files. One work around for this problem is to create "light" GitBags. All this means is that you add only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) to your Git repo, and not the payload files in your Bag's /data directory.
+Even Linus Torvalds admits that Git "[sucks](http://osdir.com/ml/git/2009-05/msg00051.html)" at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since Bags may contain large numbers of big files. One work around for this problem is to create "light" GitBags. All this means is that you add only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) to your Git repo, and not the payload files in your Bag's /data directory.
 
-Any modification to a payload file will result in a new checksum, so updating the manifests for a Bag will result in a change to the manifest files (and in bag-info.txt if you use the Payload-Oxum tag). For this reason, Git is able to track changes to payload files even if the payload files are not included in the Git repo. An additional benefit of light GitBags is that they won't get nearly as large as GitBags that version large files. The disadvantages of light GitBags are that 1) the payload files are not versioned (in other words, you will be able to tell if a payload file was modifed, but not retrieve the pre-modified version of the file), and 2) you won't be able to clone a GitBag since the payload files would not be included in the clone.
+Any modification to a payload file will result in a new checksum for that file, so updating the manifests for a Bag will result in a change to the manifest files (and in bag-info.txt if you use the Payload-Oxum tag). For this reason, Git is able to track changes to payload files even if those files are not included in the Git repo. An additional benefit of light GitBags is that they won't get nearly as large as GitBags that version large files
+
+The disadvantages of light GitBags are 1) the payload files are not versioned (in other words, you will be able to tell if a payload file was modifed, but not retrieve the pre-modified version of the file), and 2) if you clone a light GitBag, the payload files will not be included in the clone (but you can copy and move the GitBag using normal operating system commands).
 
 Here is an example of creating a light GitBag. I have a Bag with the following contents:
 
@@ -153,17 +155,16 @@ index 143df4a..723eefa 100644
  7c295cc2f92f46f411e2b63e4ae025dc  data/1930-02-10-08.tif
 ```
 
-As you can see, the changes in bag-info.txt and manifest-md5.txt document the modification to my payload file. If I want to reveal the changes made to my GitBag later, I can use ``git reflog show`` (or `git log`) and then reveal the details of the change in the tagfiles introduced in the commit:
+We see that the changes in bag-info.txt and manifest-md5.txt document the modification to data/1930-02-10-05.tif. If I want to inspect the changes made to my GitBag later, I can use ``git reflog show`` (or `git log`) and then reveal the details of the change in the tagfiles introduced in the commit:
 
 ```
 git reflog show
 fbed80e HEAD@{0}: commit: Modified data/1930-02-10-05.tif.
 140dadf HEAD@{1}: commit (initial): Initial commit (.txt files only).
 ```
-then to see more detail:
+Then, to see more detail is can run `git log fbed80e -p -1 -- manifest-md5.txt`:
 
 ```
-git log fbed80e -p -1 -- manifest-md5.txt
 commit fbed80e9168b0d327f892fca25d610c575162a9c
 Author: Mark Jordan <mjordan@sfu.ca>
 Date:   Sun Dec 14 09:42:14 2014 -0800
@@ -185,7 +186,7 @@ index 143df4a..723eefa 100644
  7c295cc2f92f46f411e2b63e4ae025dc  data/1930-02-10-08.tif
 ```
 
-If your application doesn't require versioning of your payload files, and you never need to clone a GitBag, light GitBags offer a very efficient way of tracking changes to the contents of a Bag.
+If your application doesn't require versioning of your payload files, and you don't need to clone a GitBag, light GitBags offer a very efficient way of tracking changes to the contents of a Bag.
 
 ## License
 
