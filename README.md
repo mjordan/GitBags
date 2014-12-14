@@ -64,7 +64,7 @@ Some include:
 1. since Git generates SHA1 checksums for all files, SHA1 checksums in BagIt manifests are redundant (but see "Are GitBags standard Bags?" below)
 1. Git operations such as diff are not practical on binary files
 1. Git is known not to scale well, so the larger the files in the Bag, the slower Git operations will be (but see "Light GitBags" below)
-1. the size of a GitBag is larger than the equivalent non-Git Bagi (also see "Light GitBags" below).
+1. the size of a GitBag is larger than the equivalent non-Git Bag (also see "Light GitBags" below).
 
 ## Are GitBags standard Bags?
 
