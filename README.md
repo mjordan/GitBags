@@ -62,8 +62,9 @@ Several potential reasons:
 Some include:
 
 1. since Git generates SHA1 checksums for all files, SHA1 checksums in BagIt manifests are redundant (but see below)
-2. Git operations such as diff are not practical on binary files
-3. the size of a GitBag is larger than the equivalent non-Git Bag.
+1. Git operations such as diff are not practical on binary files
+1. Git is known not to scale well, so the larger the files in the Bag, the slower Git operations will be
+1. the size of a GitBag is larger than the equivalent non-Git Bag.
 
 ## Are GitBags standard Bags?
 
@@ -78,6 +79,8 @@ In this example, I modify the contents of the GitBag's payload (the files in its
 * [Update the Bag's manifests]
 * `commit -am "Did something important to the payload."`
 * `mv workingcopy mybagdir`
+
+(The cloning step and the replacing step are not required, I just included them as typical actions you may want to do.)
 
 Later, I use `git log` or `git reflog show` to see the history of actions on the Bag:
 
