@@ -63,7 +63,7 @@ Some include:
 
 1. since Git generates SHA1 checksums for all files, SHA1 checksums in BagIt manifests are redundant (but see below)
 1. Git operations such as diff are not practical on binary files
-1. Git is known not to scale well, so the larger the files in the Bag, the slower Git operations will be
+1. Git is known not to scale well, so the larger the files in the Bag, the slower Git operations will bei (see "Light mode" below)
 1. the size of a GitBag is larger than the equivalent non-Git Bag.
 
 ## Are GitBags standard Bags?
@@ -92,5 +92,99 @@ Later, I use `git log` or `git reflog show` to see the history of actions on the
 This workflow can easily be scripted. For instance, Python provides libraries for [creating Bags](https://github.com/LibraryOfCongress/bagit-python) and [manipulating Git repositories](https://gitorious.org/git-python).
 
 There is one requirement in GitBag workflows: all Git operations need to be performed after the Bag has been created or modified. Otherwise, the .git directory will be added to the payload. You don't want this since 1) only Bag's payload and not its manifests or tagfiles would be under Git's control and 2) you would likely invalidate your Bag if you performed any Git operations that write to its directory. So, in practice, you should always create the Bag first (or take an existing Bag), then initialize the Git repo, and modify the Bag's payload or tagfiles, then commit the changes using Git. Bag operations, then GIt operations. Bag, then Git.
+
+## "Light" GitBags
+
+Even Linus Torvalds admits that Git "[sucks](http://osdir.com/ml/git/2009-05/msg00051.html)" at handling big files. Basically, the larger the file, the longer Git operations like `add` take. This is a problem for GitBags, since many Bags will contain fairly large numbers of big files. One strategy for working around this problem is to create "light" GitBags. All this means is that you add only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) files to your Git repo, and not the files in your Bag's payload files.
+
+Since all changes to payload files are recorded in the manifest files (and in bag-info.txt if you use the Payload-Oxum tag) , Git is still able to track changes to payload files. The disadvantage of this approach is that the payload files are not versioned. So, you will be able to tell if a payload file was modifed, but not retrieve the pre-modified version of the file.
+
+For example, I have a Bag with the following contents:
+
+```
+1930-02-10/
+├── bag-info.txt
+├── bagit.txt
+├── data
+│   ├── 1930-02-10-01.tif
+│   ├── 1930-02-10-02.tif
+│   ├── 1930-02-10-03.tif
+│   ├── 1930-02-10-04.tif
+│   ├── 1930-02-10-05.tif
+│   ├── 1930-02-10-06.tif
+│   ├── 1930-02-10-07.tif
+│   ├── 1930-02-10-08.tif
+│   ├── 1930-02-10-09.tif
+│   ├── 1930-02-10-10.tif
+│   ├── 1930-02-10-11.tif
+│   ├── 1930-02-10-12.tif
+│   └── mets.xml
+├── manifest-md5.txt
+└── tagmanifest-md5.txt
+```
+
+I convert this Bag to a GitBag by initializing a repo in the 1930-02-10 folder, and then `git add` only the text files. I then modify one of the .tif files (in this example, data/1930-02-10-05.tif) and update the Bag's manifests using my favorite BagIt tool. If I do a `git diff` on my GitBag I get the following:
+
+```
+diff --git a/bag-info.txt b/bag-info.txt
+index e7e8f97..e306823 100644
+--- a/bag-info.txt
++++ b/bag-info.txt
+@@ -2,5 +2,5 @@ Bag-Software-Agent: bagit.py <http://github.com/edsu/bagit>
+ Bagging-Date: 2013-11-22
+ External-Description: METS document and accompanying object files conforming to the SFU Library Digitized Content Packaging
+-Payload-Oxum: 19524704.13
++Payload-Oxum: 190613382.13
+ Source-Organization: Simon Fraser University Library
+diff --git a/manifest-md5.txt b/manifest-md5.txt
+index 143df4a..723eefa 100644
+--- a/manifest-md5.txt
++++ b/manifest-md5.txt
+@@ -2,7 +2,7 @@
+ 3db2dfb6b1d2c1d279a2d41820893b57  data/1930-02-10-02.tif
+ fc153fd45a7d65b3f8b7d3cf356b799e  data/1930-02-10-03.tif
+ c31e63526ff0fc258a61892f1bb43452  data/1930-02-10-04.tif
+-13d9ba7cddfdf2bccc8fcdf81c530eda  data/1930-02-10-05.tif
++b4a7f47536fe2339e3db0a6bd0b9ec93  data/1930-02-10-05.tif
+ 2994aaca4d7bf4afb2f1e2bab4a10cd3  data/1930-02-10-06.tif
+ cda70d42b2e2ab6f37fd236d5a5b572f  data/1930-02-10-07.tif
+ 7c295cc2f92f46f411e2b63e4ae025dc  data/1930-02-10-08.tif
+```
+
+The changes in bag-info.txt and manifest-md5.txt document the modification to my payload file. If I want to reveal the changes made to my GitBag later, I can use ``git reflog show`` (or `git log`) and then show the change in the tagfiles introduced in the commit:
+
+```
+git reflog show
+fbed80e HEAD@{0}: commit: Modified data/1930-02-10-05.tif.
+140dadf HEAD@{1}: commit (initial): Initial commit (.txt files only).
+```
+then
+
+```
+git log fbed80e -p -1 -- manifest-md5.txt
+commit fbed80e9168b0d327f892fca25d610c575162a9c
+Author: Mark Jordan <mjordan@sfu.ca>
+Date:   Sun Dec 14 09:42:14 2014 -0800
+
+    Modified data/1930-02-10-05.tif.
+
+diff --git a/manifest-md5.txt b/manifest-md5.txt
+index 143df4a..723eefa 100644
+--- a/manifest-md5.txt
++++ b/manifest-md5.txt
+@@ -2,7 +2,7 @@
+ 3db2dfb6b1d2c1d279a2d41820893b57  data/1930-02-10-02.tif
+ fc153fd45a7d65b3f8b7d3cf356b799e  data/1930-02-10-03.tif
+ c31e63526ff0fc258a61892f1bb43452  data/1930-02-10-04.tif
+-13d9ba7cddfdf2bccc8fcdf81c530eda  data/1930-02-10-05.tif
++b4a7f47536fe2339e3db0a6bd0b9ec93  data/1930-02-10-05.tif
+ 2994aaca4d7bf4afb2f1e2bab4a10cd3  data/1930-02-10-06.tif
+ cda70d42b2e2ab6f37fd236d5a5b572f  data/1930-02-10-07.tif
+ 7c295cc2f92f46f411e2b63e4ae025dc  data/1930-02-10-08.tif
+```
+
+If your application doesn't require versioning of your payload files, using light GitBags is a good option. An additional benefit is that the GitBags won't get nearly as large as ones that do version large files.
+
+## License
 
 ![This work is in the Public Domain](http://i.creativecommons.org/p/mark/1.0/88x31.png)
