@@ -91,7 +91,7 @@ Later, I use `git log` or `git reflog show` to see the history of actions on the
 
 This workflow can easily be scripted. For instance, Python provides libraries for [creating Bags](https://github.com/LibraryOfCongress/bagit-python) and [manipulating Git repositories](https://gitorious.org/git-python).
 
-There is one requirement in GitBag workflows: all Git operations need to be performed after the Bag has been created or modified. Otherwise, the .git directory will be added to the payload. You don't want this since 1) only Bag's payload and not its manifests or tagfiles would be under Git's control and 2) you would likely invalidate your Bag if you performed any Git operations that write to its directory. So, in practice, you should always create the Bag first (or take an existing Bag), then initialize the Git repo, and modify the Bag's payload or tagfiles, then commit the changes using Git. Bag operations, then Git operations.
+There is one requirement in GitBag workflows: all Git operations need to be performed after the Bag has been created or modified. Otherwise, the .git directory will be added to the payload. You don't want this since 1) only the Bag's payload and not its manifests or tagfiles would be under Git's control and 2) you would likely invalidate your Bag if you performed any Git operations that write to its directory. So, in practice, you should always create the Bag first (or take an existing Bag), then initialize the Git repo, and modify the Bag's payload or tagfiles, then commit the changes using Git. Bag operations, then Git operations.
 
 ## Light GitBags
 
