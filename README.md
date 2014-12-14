@@ -63,8 +63,8 @@ Some include:
 
 1. since Git generates SHA1 checksums for all files, SHA1 checksums in BagIt manifests are redundant (but see below)
 1. Git operations such as diff are not practical on binary files
-1. Git is known not to scale well, so the larger the files in the Bag, the slower Git operations will bei (see "Light mode" below)
-1. the size of a GitBag is larger than the equivalent non-Git Bag.
+1. Git is known not to scale well, so the larger the files in the Bag, the slower Git operations will be (see "Light GitBags" below)
+1. the size of a GitBag is larger than the equivalent non-Git Bagi (also see "Light GitBags" below).
 
 ## Are GitBags standard Bags?
 
@@ -95,11 +95,11 @@ There is one requirement in GitBag workflows: all Git operations need to be perf
 
 ## "Light" GitBags
 
-Even Linus Torvalds admits that Git "[sucks](http://osdir.com/ml/git/2009-05/msg00051.html)" at handling big files. Basically, the larger the file, the longer Git operations like `add` take. This is a problem for GitBags, since many Bags will contain fairly large numbers of big files. One strategy for working around this problem is to create "light" GitBags. All this means is that you add only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) files to your Git repo, and not the files in your Bag's payload files.
+Even Linus Torvalds admits that Git "[sucks](http://osdir.com/ml/git/2009-05/msg00051.html)" at handling big files. Basically, the larger the file, the longer Git operations like `add` take. This is a problem, since many Bags will contain fairly large numbers of big files. One work around for this problem is to create "light" GitBags. All this means is that you add only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) to your Git repo, and not the files in your Bag's payload files.
 
-Since all changes to payload files are recorded in the manifest files (and in bag-info.txt if you use the Payload-Oxum tag) , Git is still able to track changes to payload files. The disadvantage of this approach is that the payload files are not versioned. So, you will be able to tell if a payload file was modifed, but not retrieve the pre-modified version of the file.
+Since all changes to the checksums generated for payload files are recorded in the manifest files (and in bag-info.txt if you use the Payload-Oxum tag), Git is still able to track changes to payload files. The disadvantage of this approach is that the payload files are not versioned. So, you will be able to tell if a payload file was modifed, but not retrieve the pre-modified version of the file.
 
-For example, I have a Bag with the following contents:
+Here is an example of creating a light GitBag. I have a Bag with the following contents:
 
 ```
 1930-02-10/
@@ -123,7 +123,9 @@ For example, I have a Bag with the following contents:
 └── tagmanifest-md5.txt
 ```
 
-I convert this Bag to a GitBag by initializing a repo in the 1930-02-10 folder, and then `git add` only the text files. I then modify one of the .tif files (in this example, data/1930-02-10-05.tif) and update the Bag's manifests using my favorite BagIt tool. If I do a `git diff` on my GitBag I get the following:
+I convert this Bag to a GitBag by initializing a repo in the 1930-02-10 folder, and then `git add` only the text files. I then modify one of the .tif files (in this example, data/1930-02-10-05.tif) and update the Bag's manifests using my favorite BagIt tool.
+
+If I do a `git diff` on my GitBag after updating the manifests, I get the following:
 
 ```
 diff --git a/bag-info.txt b/bag-info.txt
@@ -151,7 +153,7 @@ index 143df4a..723eefa 100644
  7c295cc2f92f46f411e2b63e4ae025dc  data/1930-02-10-08.tif
 ```
 
-The changes in bag-info.txt and manifest-md5.txt document the modification to my payload file. If I want to reveal the changes made to my GitBag later, I can use ``git reflog show`` (or `git log`) and then show the change in the tagfiles introduced in the commit:
+As you can see, the changes in bag-info.txt and manifest-md5.txt document the modification to my payload file. If I want to reveal the changes made to my GitBag later, I can use ``git reflog show`` (or `git log`) and then show the change in the tagfiles introduced in the commit:
 
 ```
 git reflog show
@@ -183,7 +185,7 @@ index 143df4a..723eefa 100644
  7c295cc2f92f46f411e2b63e4ae025dc  data/1930-02-10-08.tif
 ```
 
-If your application doesn't require versioning of your payload files, using light GitBags is a good option. An additional benefit is that the GitBags won't get nearly as large as ones that do version large files.
+If your application doesn't require versioning of your payload files, using light GitBags is a good option. An additional benefit is that the GitBags won't get nearly as large as GitBags that do version large files.
 
 ## License
 
