@@ -68,7 +68,7 @@ Some include:
 
 ## Are GitBags standard Bags?
 
-Yes. A GitBag is just a Bag with a .git subdirectory within the top-level Bag directory. Bags that contain .git directories validate, and if you remove the .git directory, the Bag still validates (which is why having those redundant SHA1 hashes around is good). 
+Yes. A GitBag is an ordinary Bag with a .git subdirectory within the top-level directory. Bags that contain .git directories validate, and if you remove the .git directory, the Bag still validates (which is why having those redundant SHA1 hashes around is good). 
 
 ## An example workflow
 
