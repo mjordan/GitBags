@@ -95,7 +95,7 @@ There is one requirement in GitBag workflows: all Git operations need to be perf
 
 ## Light GitBags
 
-Even Linus Torvalds [admits](http://osdir.com/ml/git/2009-05/msg00051.html) that Git sucks at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since it is common for Bags to contain large numbers of big files. One work around for this problem is to create "light" GitBags. In a light GitBag, only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) are tracked in the Git repo, and the payload files in your Bag's /data directory are not.
+Even Linus Torvalds [admits](http://osdir.com/ml/git/2009-05/msg00051.html) that Git sucks at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since it is common for Bags to contain large numbers of big files. One work around for this problem is to create "light" GitBags. In a light GitBag, only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) are tracked in the Git repo, and the payload files in the Bag's /data directory are not.
 
 Modifying the contents of a payload file will result in a new checksum for that file, and regenerating a Bag's manifests will alter its manfiest files (and to bag-info.txt if you use the Payload-Oxum tag) correspondingly. For this reason, Git is able to track changes to payload files even if those files are not included in the Git repo.
 
