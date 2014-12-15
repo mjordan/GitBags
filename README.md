@@ -95,9 +95,9 @@ There is one requirement in GitBag workflows: all Git operations need to be perf
 
 ## Light GitBags
 
-Even Linus Torvalds [admits](http://osdir.com/ml/git/2009-05/msg00051.html) that Git sucks at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since it is common for Bags to contain large numbers of big files. One work around for this problem is to create "light" GitBags. In a light GitBag, only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) are tracked in the Git repo; the payload files in the Bag's /data directory are not.
+Even Linus Torvalds [admits](http://osdir.com/ml/git/2009-05/msg00051.html) that Git sucks at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since it's common for Bags to contain large numbers of large files. One workaround for this problem is to create "light" GitBags. In a light GitBag, only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) are tracked in the Git repo; the payload files in the Bag's /data directory are not.
 
-Git is able to track changes to payload files even if those files are not included in the Git repo because modifying the contents of a payload file will result in a new checksum for that file. Regenerating a Bag's manifests will update its manfiest files (and to bag-info.txt if you use the Payload-Oxum tag) correspondingly. The changes to the tagfiles document the changes to the payload files. 
+Git is able to track changes to payload files even if those files are not included in the Git repo because modifying the contents of a payload file will result in a new checksum for that file. Regenerating a Bag's manifests will update its manifest-md5.txt, manifest-sha1.txt, etc. (and bag-info.txt if you use the Payload-Oxum tag) correspondingly. The changes to the tagfiles document the changes to the payload files. 
 
 So light GitBags solve the big file problem by not putting those files under Git's direct control. An additional benefit of this approach is that the Bag's size will not increase significantly with every change to the payload files, since the Git repo within the Bag stores previous versions of only the tagfiles.
 
