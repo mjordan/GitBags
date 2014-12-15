@@ -97,7 +97,7 @@ There is one requirement in GitBag workflows: all Git operations need to be perf
 
 Even Linus Torvalds [admits](http://osdir.com/ml/git/2009-05/msg00051.html) that Git sucks at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since it is common for Bags to contain large numbers of big files. One work around for this problem is to create "light" GitBags. In a light GitBag, only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) are tracked in the Git repo; the payload files in the Bag's /data directory are not.
 
-Modifying the contents of a payload file will result in a new checksum for that file, and regenerating a Bag's manifests will update its manfiest files (and to bag-info.txt if you use the Payload-Oxum tag) correspondingly. For this reason, Git is able to track changes to payload files even if those files are not included in the Git repo.
+Git is able to track changes to payload files even if those files are not included in the Git repo because modifying the contents of a payload file will result in a new checksum for that file. Regenerating a Bag's manifests will update its manfiest files (and to bag-info.txt if you use the Payload-Oxum tag) correspondingly. The changes to the tagfiles document the changes to the payload files. 
 
 So light GitBags solve the big file problem by not putting those files under Git's direct control. An additional benefit of this approach is that the Bag's size will not increase significantly with every change to the payload files, since the Git repo within the Bag stores previous versions of only the tagfiles.
 
@@ -191,7 +191,7 @@ index 143df4a..723eefa 100644
  7c295cc2f92f46f411e2b63e4ae025dc  data/1930-02-10-08.tif
 ```
 
-If your application doesn't require versioning of your payload files, and you don't need to clone a GitBag, light GitBags offer a very efficient way of tracking changes to the contents of a Bag.
+If your application doesn't require versioning of your payload files, and you don't need to clone your GitBags, light GitBags offer a very efficient way of tracking changes to a Bag's contents.
 
 ## License
 
