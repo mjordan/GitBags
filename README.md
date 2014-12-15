@@ -95,18 +95,18 @@ There is one requirement in GitBag workflows: all Git operations need to be perf
 
 ## Light GitBags
 
-Even Linus Torvalds [admits](http://osdir.com/ml/git/2009-05/msg00051.html) that Git sucks at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since it is common for Bags to contain large numbers of big files. One work around for this problem is to create "light" GitBags. In a light GitBag, only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) are tracked in the Git repo, and the payload files in the Bag's /data directory are not.
+Even Linus Torvalds [admits](http://osdir.com/ml/git/2009-05/msg00051.html) that Git sucks at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since it is common for Bags to contain large numbers of big files. One work around for this problem is to create "light" GitBags. In a light GitBag, only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) are tracked in the Git repo; the payload files in the Bag's /data directory are not.
 
-Modifying the contents of a payload file will result in a new checksum for that file, and regenerating a Bag's manifests will alter its manfiest files (and to bag-info.txt if you use the Payload-Oxum tag) correspondingly. For this reason, Git is able to track changes to payload files even if those files are not included in the Git repo.
+Modifying the contents of a payload file will result in a new checksum for that file, and regenerating a Bag's manifests will update its manfiest files (and to bag-info.txt if you use the Payload-Oxum tag) correspondingly. For this reason, Git is able to track changes to payload files even if those files are not included in the Git repo.
 
-So light GitBags solve the big file problem by not putting those files under Git's direct control. An additional benefit of light GitBags is that they won't get nearly as large as GitBags that version big files, because they don't keep old versions of the files - they only keep versions of the tagfiles.
+So light GitBags solve the big file problem by not putting those files under Git's direct control. An additional benefit of this approach is that the Bag's size will not increase significantly with every change to the payload files, since the Git repo within the Bag stores previous versions of only the tagfiles.
 
-Light GitBags have a couple of disadvantages:
+Light GitBags have a couple of disadvantages, however:
 
-1. the payload files are not versioned (in other words, you will be able to tell if a payload file was modifed, but not retrieve the pre-modified version of the file)
+1. since the payload files are not versioned, you will not be able to retrieve the contents of earlier versions of the files 
 2. if you clone a light GitBag, the payload files will not be included in the clone (but you can copy and move the GitBag using normal operating system commands).
 
-Here is an example of creating a light GitBag. I have a Bag with the following contents:
+Here is an example of creating a light GitBag and modifying one of the Bag's payload files. I have a Bag with the following contents:
 
 ```
 1930-02-10/
