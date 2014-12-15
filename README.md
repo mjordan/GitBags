@@ -1,6 +1,6 @@
 # GitBags
 
-A GitBag is a [Bag](https://tools.ietf.org/html/draft-kunze-bagit-05) that is contained within a Git repository. For example, for a Bag in a directory named 'mybagdir,' you have this:
+A GitBag is a [Bag](https://tools.ietf.org/html/draft-kunze-bagit-05) whose contents are versioned within a Git repository. The .git directory sits within the top-level Bag directory. For example, for a Bag in a directory named 'mybagdir,' you have this:
 
 ```
 mybagdir/
