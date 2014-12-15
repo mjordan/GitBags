@@ -72,7 +72,7 @@ Yes. A GitBag is an ordinary Bag with a .git subdirectory within the top-level d
 
 ## An example workflow
 
-In this example, I modify the contents of the GitBag's payload (the files in its /data directory). Before I do anything to the GitBag's payload, I clone the GitBag to create a working copy. Then, I update the payload and regnerate the Bag (or update its manifests). Next, I perform a `git commit` on the GitBag. Finally, I replace the original GitBag with the updated working copy. Here are those actions expressed as a series of steps I perform from within the GitBag's directory:
+In this example, I want to modify the contents of the GitBag's payload (the files in its /data directory). Before I do anything to the GitBag's payload, I clone the GitBag to create a working copy. Then, I update the payload and regenerate the Bag (or update its manifests using my favorite BagIt tool). Next, I perform a `git commit` on the GitBag. Finally, I replace the original GitBag with the updated working copy. Here are those actions expressed as a series of steps I perform from within the GitBag's directory:
 
 * `git clone mybagdir workingcopy`
 * [Edit/modify the payload files]
