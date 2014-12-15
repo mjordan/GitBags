@@ -1,6 +1,6 @@
 # GitBags
 
-A GitBag is a [Bag](https://tools.ietf.org/html/draft-kunze-bagit-05) whose contents are versioned within a Git repository. The .git directory sits within the top-level Bag directory. For example, for a Bag in a directory named 'mybagdir,' you have this:
+A GitBag is a [Bag](https://tools.ietf.org/html/draft-kunze-bagit-05) whose contents are versioned within a Git repository. The .git directory sits in the top-level Bag directory, alongside the Bag's tagfiles and /data directory. For example, for a Bag in a directory named 'mybagdir,' you have this:
 
 ```
 mybagdir/
@@ -95,7 +95,7 @@ There is one requirement in GitBag workflows: all Git operations need to be perf
 
 ## Light GitBags
 
-Even Linus Torvalds [admits](http://osdir.com/ml/git/2009-05/msg00051.html) that Git sucks at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since it's common for Bags to contain large numbers of large files. One workaround for this problem is to create "light" GitBags. In a light GitBag, only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) are tracked in the Git repo; the payload files in the Bag's /data directory are not.
+Even Linus Torvalds [admits](http://osdir.com/ml/git/2009-05/msg00051.html) that Git sucks at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since it's common for Bags to contain a lot of large files. One workaround for this problem is to create "light" GitBags. In a light GitBag, only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) are tracked in the Git repo; the payload files in the Bag's /data directory are not.
 
 Git is able to track changes to payload files even if those files are not included in the Git repo because modifying the contents of a payload file will result in a new checksum for that file. Regenerating a Bag's manifests will update its manifest-md5.txt, manifest-sha1.txt, etc. (and bag-info.txt if you use the Payload-Oxum tag) correspondingly. The changes to the tagfiles document the changes to the payload files. 
 
