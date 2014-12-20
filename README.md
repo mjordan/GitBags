@@ -95,17 +95,17 @@ There is one requirement in GitBag workflows: all Git operations need to be perf
 
 ## Light GitBags
 
-Even Linus Torvalds [admits](http://osdir.com/ml/git/2009-05/msg00051.html) that Git sucks at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since it's common for Bags to contain a lot of large files. This graph illustrates the relationship between size of files and the time it takes to complete Git `add` and `commit` operations. Two sets of operations are included, the initial add and commit, and a second add and commit after the file was modified slightly:
+Even Linus Torvalds [admits](http://osdir.com/ml/git/2009-05/msg00051.html) that Git sucks at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since it's common for Bags to contain a lot of large files. To illustrate how Git handles large files, I created a set of binary files ranging from 1 MB to 1000 MB and added each one to its own repo. The first graph illustrates the relationship between size of files and the time it took to complete Git `add` and `commit` operations. I included two sets of operations, the initial add and commit, and a second add and commit after the file was modified slightly:
 
 ![Git operations time vs. file size](git_operations_vs_binary_file_size.png)
 
 The larger the file being added, the longer the time Git takes to stage (`add`) it. `commit` operations do not take nearly as long, but they also increase proportionately with the size of the staged file.
 
-Another issue is that since Git keeps a copy of the file corresponding to each modification of the file, the disk usage of Git repos that contain large files can grow substantially. This second graph shows the relationship between size of the file being added to the repo and the size of the entire repo (which includes the original file and a copy for each version):
+Another issue with large files is that since Git stores a new copy of each file every time the file is modified, the disk usage of Git repos that contain large files can grow substantially if the files in the repo are modified frequently. This second graph shows the relationship between size of the file being added to the repo and the amount of disk storage consumed by the repo (which includes the original file and a copy for each version):
 
 ![Git repo disk usage vs. file size](repo_size_vs_binary_file_size.png)
 
-For a repo containing a single 1000 MB file, the repo consumes 2 GB of disk space; after the file is modified once and added to the repo, the disk usage grows to 3 GB. This data is the result of tests using compressed binary files; Git performs compression on the files so in some cases the disk usage of the repo may be slightly less than is illustrated here.
+For a repo containing a single 1 GB file, the repo consumes 2 GB of disk space; after the file is modified once and added to the repo, the disk usage grows to 3 GB. This data is the result of tests using compressed binary files; Git performs compression on the files when it can so in some cases the disk usage of the repo may be slightly less than is illustrated here.
 
 One workaround for this set of problems is to create "light" GitBags. In a light GitBag, only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) are tracked in the Git repo; the payload files in the Bag's /data directory are not.
 
