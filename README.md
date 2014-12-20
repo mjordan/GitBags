@@ -107,7 +107,7 @@ Another issue with large files is that since Git stores a new copy of each file 
 
 ![Git repo disk usage vs. file size](repo_size_vs_binary_file_size.png)
 
-For a repo containing a single 1 GB file, the repo consumes 2 GB of disk space (one copy in the repo's working directory and one copy in its object store); after the file is modified once and added to the repo, the disk usage grows to 3 GB (one copy in the working directory and one copy in the repo's object store for each version). This test used compressed binary files; Git performs compression on the files when it can so in some cases the disk usage of the repo may be slightly less than is illustrated here.
+A Git  repo containing a single 1 GB file consumes 2 GB of disk space (one copy in the repo's working directory and one copy in its object store); after the file is modified once and added to the repo, the disk usage grows to 3 GB (one copy in the working directory and one copy in the repo's object store for each version). This test used compressed binary files; Git performs compression on the files when it can so in some cases the disk usage of the repo may be slightly less than is illustrated here.
 
 One workaround for this set of problems is to create "light" GitBags. In a light GitBag, only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) are tracked in the Git repo; the payload files in the Bag's /data directory are not.
 
