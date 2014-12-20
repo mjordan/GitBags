@@ -95,7 +95,9 @@ There is one requirement in GitBag workflows: all Git operations need to be perf
 
 ## Light GitBags
 
-Even Linus Torvalds [admits](http://osdir.com/ml/git/2009-05/msg00051.html) that Git sucks at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since it's common for Bags to contain a lot of large files. To illustrate how Git handles large files, I created a set of binary files ranging from 1 MB to 1000 MB and added each one to its own repo. The first graph illustrates the relationship between size of files and the time it took to complete Git `add` and `commit` operations. I included two sets of operations, the initial add and commit, and a second add and commit after the file was modified slightly:
+Even Linus Torvalds [admits](http://osdir.com/ml/git/2009-05/msg00051.html) that Git sucks at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since it's common for Bags to contain a lot of large files.
+
+To illustrate how Git handles large files, I created a set of 10 binary files ranging from 1 MB to 1000 MB and added each one to its own repo. The first graph illustrates the relationship between size of files and the time it took to complete Git `add` and `commit` operations. I performed two sets of operations, the initial add and commit, and a second add and commit after the file was modified slightly:
 
 ![Git operations time vs. file size](git_operations_vs_binary_file_size.png)
 
@@ -105,7 +107,7 @@ Another issue with large files is that since Git stores a new copy of each file 
 
 ![Git repo disk usage vs. file size](repo_size_vs_binary_file_size.png)
 
-For a repo containing a single 1 GB file, the repo consumes 2 GB of disk space; after the file is modified once and added to the repo, the disk usage grows to 3 GB. This data is the result of tests using compressed binary files; Git performs compression on the files when it can so in some cases the disk usage of the repo may be slightly less than is illustrated here.
+For a repo containing a single 1 GB file, the repo consumes 2 GB of disk space (one copy in the repo's working directory and one copy in its object store); after the file is modified once and added to the repo, the disk usage grows to 3 GB (one copy in the working directory and one copy in the repo's object store for each version). This test used compressed binary files; Git performs compression on the files when it can so in some cases the disk usage of the repo may be slightly less than is illustrated here.
 
 One workaround for this set of problems is to create "light" GitBags. In a light GitBag, only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) are tracked in the Git repo; the payload files in the Bag's /data directory are not.
 
