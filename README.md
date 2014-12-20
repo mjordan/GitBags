@@ -97,7 +97,7 @@ There is one requirement in GitBag workflows: all Git operations need to be perf
 
 Even Linus Torvalds [admits](http://osdir.com/ml/git/2009-05/msg00051.html) that Git sucks at handling big files. The larger the file, the longer Git operations like `add` take. This is a problem, since it's common for Bags to contain a lot of large files.
 
-To illustrate how Git handles large files, I created a set of 10 binary files ranging from 1 MB to 1000 MB and added each one to its own repo. I performed two sets of operations, the initial `add` and `commit`, and a second `add` and `commit` after the file was modified slightly. The first graph below illustrates the relationship between size of files and the time it took to complete Git `add` and `commit` operations:
+To illustrate how Git handles large files, I created a set of 10 binary files ranging from 1 MB to 1000 MB and added each one to its own repo. I performed two sets of operations, the initial `add` and `commit`, and a second `add` and `commit` after the file was modified slightly (specifically, I added 10 bytes to the end of the file by running `truncate -s +10 filename`). The first graph below illustrates the relationship between size of files and the time it took to complete Git `add` and `commit` operations:
 
 ![Git operations time vs. file size](git_operations_vs_binary_file_size.png)
 
