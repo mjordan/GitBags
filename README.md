@@ -109,9 +109,7 @@ Another issue with large files is that since Git stores a new copy of each file 
 
 A Git  repo containing a single 1 GB file consumes 2 GB of disk space (one copy in the repo's working directory and one copy in its object store); after the file is modified once and added to the repo, the disk usage grows to 3 GB (one copy in the working directory and one copy in the repo's object store for each version). This test used compressed binary files; Git performs compression on the files when it can so in some cases the disk usage of the repo may be slightly less than is illustrated here.
 
-One workaround for this set of problems is to create "light" GitBags. In a light GitBag, only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) are tracked in the Git repo; the payload files in the Bag's /data directory are not.
-
-Git is able to track changes to payload files even if those files are not included in the Git repo because modifying the contents of a payload file will result in a new checksum for that file. Regenerating a Bag's manifests will update its manifest-md5.txt, manifest-sha1.txt, etc. (and bag-info.txt if you use the Payload-Oxum tag) correspondingly. The changes to the tagfiles document the changes to the payload files. 
+One workaround for this set of problems is to create "light" GitBags. In a light GitBag, only the tagfiles (bag-info.txt, manfiest-md5.txt, etc.) are tracked in the Git repo; the payload files in the Bag's /data directory are not.  Git is able to track changes to payload files even if those files are not included in the Git repo because modifying the contents of a payload file will result in a new checksum for that file. Regenerating a Bag's manifests will update its manifest-md5.txt, manifest-sha1.txt, etc. (and bag-info.txt if you use the Payload-Oxum tag) correspondingly. The changes to the tagfiles document the changes to the payload files. 
 
 So light GitBags solve the big file problem by not putting those files under Git's direct control. An additional benefit of this approach is that the Bag's size will not increase significantly with every change to the payload files, since the Git repo within the Bag stores previous versions of only the tagfiles.
 
@@ -144,7 +142,7 @@ Here is an example of creating a light GitBag and modifying one of the Bag's pay
 └── tagmanifest-md5.txt
 ```
 
-I convert this Bag to a GitBag by initializing a repo in the 1930-02-10 directory, and then `git add` only bagit.txt,  bag-info.txt, manifest-md5.txt, and tagmanifest.txt. I then modify one of the payload files (in this example, data/1930-02-10-05.tif) and update the Bag's manifests using my favorite BagIt tool.
+I convert this Bag to a GitBag by initializing a repo in the 1930-02-10 directory, and then `git add` only bagit.txt,  bag-info.txt, manifest-md5.txt, and tagmanifest-md5.txt. I then modify one of the payload files (in this example, data/1930-02-10-05.tif) and update the Bag's manifests using my favorite BagIt tool.
 
 If I do a `git diff` on my GitBag after updating the manifests, I get the following:
 
