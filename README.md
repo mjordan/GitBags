@@ -205,6 +205,101 @@ index 143df4a..723eefa 100644
 
 If your application doesn't require versioning of your payload files, and you don't need to clone your GitBags, light GitBags offer a very efficient way of tracking changes to a Bag's contents.
 
+## Using a GitBag's history
+
+The GitBag's reflog can be used for various purposes. In the context of digital preservation, for example, we can express the history of objects in the GitBag as a PREMIS XML document. For instance, given a Git log like this:
+
+```
+file3.txt
+c561945 - Mark Jordan - Mon Dec 22 06:58:29 2014 -0800 - Initial commit.
+fea5b27 - Mark Jordan - Mon Dec 22 07:06:48 2014 -0800 - Changed file 3.
+2df5517 - Mark Jordan - Mon Dec 22 10:28:20 2014 -0800 - Updated file3.txt.
+file1.txt
+c561945 - Mark Jordan - Mon Dec 22 06:58:29 2014 -0800 - Initial commit.
+0b691e7 - Mark Jordan - Mon Dec 22 10:28:11 2014 -0800 - Updated file1.txt.
+file2.txt
+36b2545 - Mark Jordan - Mon Dec 22 07:07:37 2014 -0800 - Renamed file2.
+```
+
+we can create a simple PREMIS document like this:
+
+```xml
+
+<?xml version="1.0" ?>
+<premis>
+  <object>
+    <objectIdentifier>
+      <objectIdentifierType>URI</objectIdentifierType>
+      <objectIdentifierValue>file3.txt</objectIdentifierValue>
+    </objectIdentifier>
+  </object>
+  <object>
+    <objectIdentifier>
+      <objectIdentifierType>URI</objectIdentifierType>
+      <objectIdentifierValue>file1.txt</objectIdentifierValue>
+    </objectIdentifier>
+  </object>
+  <object>
+    <objectIdentifier>
+      <objectIdentifierType>URI</objectIdentifierType>
+      <objectIdentifierValue>file2.txt</objectIdentifierValue>
+    </objectIdentifier>
+  </object>
+  <event>
+    <eventType>Initial commit.</eventType>
+    <eventDateTime>Mon Dec 22 06:58:29 2014 -0800</eventDateTime>
+    <linkingObjectIdentifier>
+      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
+      <linkingObjectIdentifierValue>file3.txt</linkingObjectIdentifierValue>
+    </linkingObjectIdentifier>
+  </event>
+  <event>
+    <eventType>Changed file 3.</eventType>
+    <eventDateTime>Mon Dec 22 07:06:48 2014 -0800</eventDateTime>
+    <linkingObjectIdentifier>
+      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
+      <linkingObjectIdentifierValue>file3.txt</linkingObjectIdentifierValue>
+    </linkingObjectIdentifier>
+  </event>
+  <event>
+    <eventType>Updated file3.txt.</eventType>
+    <eventDateTime>Mon Dec 22 10:28:20 2014 -0800</eventDateTime>
+    <linkingObjectIdentifier>
+      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
+      <linkingObjectIdentifierValue>file3.txt</linkingObjectIdentifierValue>
+    </linkingObjectIdentifier>
+  </event>
+  <event>
+    <eventType>Updated file1.txt.</eventType>
+    <eventDateTime>Mon Dec 22 10:28:11 2014 -0800</eventDateTime>
+    <linkingObjectIdentifier>
+      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
+      <linkingObjectIdentifierValue>file1.txt</linkingObjectIdentifierValue>
+    </linkingObjectIdentifier>
+  </event>
+  <event>
+    <eventType>Initial commit.</eventType>
+    <eventDateTime>Mon Dec 22 06:58:29 2014 -0800</eventDateTime>
+    <linkingObjectIdentifier>
+      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
+      <linkingObjectIdentifierValue>file1.txt</linkingObjectIdentifierValue>
+    </linkingObjectIdentifier>
+  </event>
+  <event>
+    <eventType>Renamed file2.</eventType>
+    <eventDateTime>Mon Dec 22 07:07:37 2014 -0800</eventDateTime>
+    <linkingObjectIdentifier>
+      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
+      <linkingObjectIdentifierValue>file2.txt</linkingObjectIdentifierValue>
+    </linkingObjectIdentifier>
+  </event>
+</premis>
+
+```
+
+This PREMIS document is not complete, but it illustrates one possible application of GitBags.
+
+
 ## License
 
 ![This work is in the Public Domain](http://i.creativecommons.org/p/mark/1.0/88x31.png)
