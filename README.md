@@ -263,7 +263,7 @@ we can create a simple PREMIS document like this:
   </object>
   <event>
     <eventIdentifier>
-      <eventIdentifierType>SHA1</eventIdentifierType>
+      <eventIdentifierType>SHA-1</eventIdentifierType>
       <eventIdentifierValue>3ab47775c93f6e1b9dcc06ae905e5dba197b2a92</eventIdentifierValue>
     </eventIdentifier>
     <eventType>Git commit</eventType>
@@ -273,10 +273,14 @@ we can create a simple PREMIS document like this:
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
       <linkingObjectIdentifierValue>file1.txt</linkingObjectIdentifierValue>
     </linkingObjectIdentifier>
+    <linkingAgentdentifier>
+      <linkingAgentIdentifierType>Email address</linkingAgentIdentifierType>
+      <linkingAgentIdentifierValue>mjordan@sfu.ca</linkingAgentIdentifierValue>
+    </linkingAgentdentifier>
   </event>
   <event>
     <eventIdentifier>
-      <eventIdentifierType>SHA1</eventIdentifierType>
+      <eventIdentifierType>SHA-1</eventIdentifierType>
       <eventIdentifierValue>d0e95466a6e991bba23500d35dce2866e0ab5cec</eventIdentifierValue>
     </eventIdentifier>
     <eventType>Git commit</eventType>
@@ -286,10 +290,14 @@ we can create a simple PREMIS document like this:
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
       <linkingObjectIdentifierValue>file1.txt</linkingObjectIdentifierValue>
     </linkingObjectIdentifier>
+    <linkingAgentdentifier>
+      <linkingAgentIdentifierType>Email address</linkingAgentIdentifierType>
+      <linkingAgentIdentifierValue>mjordan@sfu.ca</linkingAgentIdentifierValue>
+    </linkingAgentdentifier>
   </event>
   <event>
     <eventIdentifier>
-      <eventIdentifierType>SHA1</eventIdentifierType>
+      <eventIdentifierType>SHA-1</eventIdentifierType>
       <eventIdentifierValue>425ff5654f0603a84100de34a265c38f40917b77</eventIdentifierValue>
     </eventIdentifier>
     <eventType>Git commit</eventType>
@@ -299,10 +307,14 @@ we can create a simple PREMIS document like this:
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
       <linkingObjectIdentifierValue>file2.txt</linkingObjectIdentifierValue>
     </linkingObjectIdentifier>
+    <linkingAgentdentifier>
+      <linkingAgentIdentifierType>Email address</linkingAgentIdentifierType>
+      <linkingAgentIdentifierValue>mjordan@sfu.ca</linkingAgentIdentifierValue>
+    </linkingAgentdentifier>
   </event>
   <event>
     <eventIdentifier>
-      <eventIdentifierType>SHA1</eventIdentifierType>
+      <eventIdentifierType>SHA-1</eventIdentifierType>
       <eventIdentifierValue>d0e95466a6e991bba23500d35dce2866e0ab5cec</eventIdentifierValue>
     </eventIdentifier>
     <eventType>Git commit</eventType>
@@ -312,10 +324,14 @@ we can create a simple PREMIS document like this:
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
       <linkingObjectIdentifierValue>file2.txt</linkingObjectIdentifierValue>
     </linkingObjectIdentifier>
+    <linkingAgentdentifier>
+      <linkingAgentIdentifierType>Email address</linkingAgentIdentifierType>
+      <linkingAgentIdentifierValue>mjordan@sfu.ca</linkingAgentIdentifierValue>
+    </linkingAgentdentifier>
   </event>
   <event>
     <eventIdentifier>
-      <eventIdentifierType>SHA1</eventIdentifierType>
+      <eventIdentifierType>SHA-1</eventIdentifierType>
       <eventIdentifierValue>4f48746998a83ce87aa6f7ae648018eb4a68fb45</eventIdentifierValue>
     </eventIdentifier>
     <eventType>Git commit</eventType>
@@ -325,8 +341,20 @@ we can create a simple PREMIS document like this:
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
       <linkingObjectIdentifierValue>another_file.txt</linkingObjectIdentifierValue>
     </linkingObjectIdentifier>
+    <linkingAgentdentifier>
+      <linkingAgentIdentifierType>Email address</linkingAgentIdentifierType>
+      <linkingAgentIdentifierValue>mjordan@sfu.ca</linkingAgentIdentifierValue>
+    </linkingAgentdentifier>
   </event>
+  <agent>
+    <agentIdentifer>
+      <agentIdentifierType>Email address</agentIdentifierType>
+      <agentIdentifierValue>mjordan@sfu.ca</agentIdentifierValue>
+    </agentIdentifer>
+    <agentName>Mark Jordan</agentName>
+  </agent>
 </premis>
+
 ```
 
 This PREMIS document is not complete, but it illustrates one possible application of GitBags. It would be fairly easy to enhance the [gitlog2premis_sample.py](https://github.com/mjordan/GitBags/blob/master/gitlog2premis_sample.py) script to generate more complete PREMIS documents.
