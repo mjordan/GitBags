@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Script to demonstrate how to create a GitBag. For more information see,
+Script to demonstrate how to create a GitBag. For more information,see
 https://github.com/mjordan/GitBags. This script is in the public domain.
 
 Usage: ./create_gitbag_sample.py [-l|--light] /path/to/directory
