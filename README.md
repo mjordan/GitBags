@@ -224,7 +224,6 @@ file2.txt
 we can create a simple PREMIS document like this:
 
 ```xml
-
 <?xml version="1.0" ?>
 <premis>
   <object>
@@ -232,27 +231,37 @@ we can create a simple PREMIS document like this:
       <objectIdentifierType>URI</objectIdentifierType>
       <objectIdentifierValue>file3.txt</objectIdentifierValue>
     </objectIdentifier>
+    <objectCharacteristics>
+      <fixity>
+        <messageDigestAlgorithm>SHA1</messageDigestAlgorithm>
+        <messageDigest>669a2c84d4eb3d540cd258b34af26909f6173cef</messageDigest>
+      </fixity>
+    </objectCharacteristics>
   </object>
   <object>
     <objectIdentifier>
       <objectIdentifierType>URI</objectIdentifierType>
       <objectIdentifierValue>file1.txt</objectIdentifierValue>
     </objectIdentifier>
+    <objectCharacteristics>
+      <fixity>
+        <messageDigestAlgorithm>SHA1</messageDigestAlgorithm>
+        <messageDigest>ce1be0ff4065a6e9415095c95f25f47a633cef2b</messageDigest>
+      </fixity>
+    </objectCharacteristics>
   </object>
   <object>
     <objectIdentifier>
       <objectIdentifierType>URI</objectIdentifierType>
       <objectIdentifierValue>file2.txt</objectIdentifierValue>
     </objectIdentifier>
+    <objectCharacteristics>
+      <fixity>
+        <messageDigestAlgorithm>SHA1</messageDigestAlgorithm>
+        <messageDigest>c2edf7b002d0354039a8aaba3bc53180caf3d248</messageDigest>
+      </fixity>
+    </objectCharacteristics>
   </object>
-  <event>
-    <eventType>Initial commit.</eventType>
-    <eventDateTime>Mon Dec 22 06:58:29 2014 -0800</eventDateTime>
-    <linkingObjectIdentifier>
-      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
-      <linkingObjectIdentifierValue>file3.txt</linkingObjectIdentifierValue>
-    </linkingObjectIdentifier>
-  </event>
   <event>
     <eventType>Changed file 3.</eventType>
     <eventDateTime>Mon Dec 22 07:06:48 2014 -0800</eventDateTime>
@@ -264,6 +273,14 @@ we can create a simple PREMIS document like this:
   <event>
     <eventType>Updated file3.txt.</eventType>
     <eventDateTime>Mon Dec 22 10:28:20 2014 -0800</eventDateTime>
+    <linkingObjectIdentifier>
+      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
+      <linkingObjectIdentifierValue>file3.txt</linkingObjectIdentifierValue>
+    </linkingObjectIdentifier>
+  </event>
+  <event>
+    <eventType>Initial commit.</eventType>
+    <eventDateTime>Mon Dec 22 06:58:29 2014 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
       <linkingObjectIdentifierValue>file3.txt</linkingObjectIdentifierValue>
