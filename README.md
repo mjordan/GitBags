@@ -263,7 +263,8 @@ we can create a simple PREMIS document like this:
     </objectCharacteristics>
   </object>
   <event>
-    <eventType>Changed file 3.</eventType>
+    <eventType>Git commit</eventType>
+    <eventDetail>Changed file 3.</eventDetail>
     <eventDateTime>Mon Dec 22 07:06:48 2014 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
@@ -271,7 +272,8 @@ we can create a simple PREMIS document like this:
     </linkingObjectIdentifier>
   </event>
   <event>
-    <eventType>Updated file3.txt.</eventType>
+    <eventType>Git commit</eventType>
+    <eventDetail>Updated file3.txt.</eventDetail>
     <eventDateTime>Mon Dec 22 10:28:20 2014 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
@@ -279,7 +281,8 @@ we can create a simple PREMIS document like this:
     </linkingObjectIdentifier>
   </event>
   <event>
-    <eventType>Initial commit.</eventType>
+    <eventType>Git commit</eventType>
+    <eventDetail>Initial commit.</eventDetail>
     <eventDateTime>Mon Dec 22 06:58:29 2014 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
@@ -287,7 +290,8 @@ we can create a simple PREMIS document like this:
     </linkingObjectIdentifier>
   </event>
   <event>
-    <eventType>Updated file1.txt.</eventType>
+    <eventType>Git commit</eventType>
+    <eventDetail>Updated file1.txt.</eventDetail>
     <eventDateTime>Mon Dec 22 10:28:11 2014 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
@@ -295,7 +299,8 @@ we can create a simple PREMIS document like this:
     </linkingObjectIdentifier>
   </event>
   <event>
-    <eventType>Initial commit.</eventType>
+    <eventType>Git commit</eventType>
+    <eventDetail>Initial commit.</eventDetail>
     <eventDateTime>Mon Dec 22 06:58:29 2014 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
@@ -303,7 +308,8 @@ we can create a simple PREMIS document like this:
     </linkingObjectIdentifier>
   </event>
   <event>
-    <eventType>Renamed file2.</eventType>
+    <eventType>Git commit</eventType>
+    <eventDetail>Renamed file2.</eventDetail>
     <eventDateTime>Mon Dec 22 07:07:37 2014 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
