@@ -207,7 +207,7 @@ If your application doesn't require versioning of your payload files, and you do
 
 ## Using a GitBag's history
 
-The GitBag's reflog can be used for various purposes. In the context of digital preservation, for example, we can express the history of objects in the GitBag as a [PREMIS](http://www.loc.gov/standards/premis/) XML document. For instance, given a Git log like this:
+The GitBag's reflog can be used for various purposes. For example, we can express the history of the files in a GitBag as a [PREMIS](http://www.loc.gov/standards/premis/) XML document. Given a Git log like this:
 
 ```
 file1.txt
@@ -329,8 +329,7 @@ we can create a simple PREMIS document like this:
 </premis>
 ```
 
-This PREMIS document is not complete, but it illustrates one possible application of GitBags. Customize the [gitlog2premis_sample.py](https://github.com/mjordan/GitBags/blob/master/gitlog2premis_sample.py) script to suit your PREMIS requirements.
-
+This PREMIS document is not complete, but it illustrates one possible application of GitBags. It would be fairly easy to enhance the [gitlog2premis_sample.py](https://github.com/mjordan/GitBags/blob/master/gitlog2premis_sample.py) script to generate more complete PREMIS documents.
 
 ## License
 
