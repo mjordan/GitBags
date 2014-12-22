@@ -207,7 +207,7 @@ If your application doesn't require versioning of your payload files, and you do
 
 ## Using a GitBag's history
 
-The GitBag's reflog can be used for various purposes. In the context of digital preservation, for example, we can express the history of objects in the GitBag as a PREMIS XML document. For instance, given a Git log like this:
+The GitBag's reflog can be used for various purposes. In the context of digital preservation, for example, we can express the history of objects in the GitBag as a [PREMIS](http://www.loc.gov/standards/premis/) XML document. For instance, given a Git log like this:
 
 ```
 file3.txt
