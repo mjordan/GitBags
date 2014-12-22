@@ -210,15 +210,14 @@ If your application doesn't require versioning of your payload files, and you do
 The GitBag's reflog can be used for various purposes. In the context of digital preservation, for example, we can express the history of objects in the GitBag as a [PREMIS](http://www.loc.gov/standards/premis/) XML document. For instance, given a Git log like this:
 
 ```
-file3.txt
-c561945 - Mark Jordan - Mon Dec 22 06:58:29 2014 -0800 - Initial commit.
-fea5b27 - Mark Jordan - Mon Dec 22 07:06:48 2014 -0800 - Changed file 3.
-2df5517 - Mark Jordan - Mon Dec 22 10:28:20 2014 -0800 - Updated file3.txt.
 file1.txt
-c561945 - Mark Jordan - Mon Dec 22 06:58:29 2014 -0800 - Initial commit.
-0b691e7 - Mark Jordan - Mon Dec 22 10:28:11 2014 -0800 - Updated file1.txt.
+d0e9546 - Mark Jordan - Mon Dec 22 11:59:02 2014 -0800 - Initial commit.
+3ab4777 - Mark Jordan - Mon Dec 22 11:59:34 2014 -0800 - Modified contents of file1.txt.
 file2.txt
-36b2545 - Mark Jordan - Mon Dec 22 07:07:37 2014 -0800 - Renamed file2.
+d0e9546 - Mark Jordan - Mon Dec 22 11:59:02 2014 -0800 - Initial commit.
+425ff56 - Mark Jordan - Mon Dec 22 12:00:54 2014 -0800 - Modified contents of file2.txt.
+another_file.txt
+4f48746 - Mark Jordan - Mon Dec 22 12:00:20 2014 -0800 - Renamed file3.txt to another_file.txt.
 ```
 
 we can create a simple PREMIS document like this:
@@ -229,24 +228,12 @@ we can create a simple PREMIS document like this:
   <object>
     <objectIdentifier>
       <objectIdentifierType>URI</objectIdentifierType>
-      <objectIdentifierValue>file3.txt</objectIdentifierValue>
-    </objectIdentifier>
-    <objectCharacteristics>
-      <fixity>
-        <messageDigestAlgorithm>SHA1</messageDigestAlgorithm>
-        <messageDigest>669a2c84d4eb3d540cd258b34af26909f6173cef</messageDigest>
-      </fixity>
-    </objectCharacteristics>
-  </object>
-  <object>
-    <objectIdentifier>
-      <objectIdentifierType>URI</objectIdentifierType>
       <objectIdentifierValue>file1.txt</objectIdentifierValue>
     </objectIdentifier>
     <objectCharacteristics>
       <fixity>
-        <messageDigestAlgorithm>SHA1</messageDigestAlgorithm>
-        <messageDigest>ce1be0ff4065a6e9415095c95f25f47a633cef2b</messageDigest>
+        <messageDigestAlgorithm>MD5</messageDigestAlgorithm>
+        <messageDigest>bd01856bfd2065d0d1ee20c03bd3a9af</messageDigest>
       </fixity>
     </objectCharacteristics>
   </object>
@@ -257,42 +244,27 @@ we can create a simple PREMIS document like this:
     </objectIdentifier>
     <objectCharacteristics>
       <fixity>
-        <messageDigestAlgorithm>SHA1</messageDigestAlgorithm>
-        <messageDigest>c2edf7b002d0354039a8aaba3bc53180caf3d248</messageDigest>
+        <messageDigestAlgorithm>MD5</messageDigestAlgorithm>
+        <messageDigest>273604bfeef7126abe1f9bff1e45126c</messageDigest>
+      </fixity>
+    </objectCharacteristics>
+  </object>
+  <object>
+    <objectIdentifier>
+      <objectIdentifierType>URI</objectIdentifierType>
+      <objectIdentifierValue>another_file.txt</objectIdentifierValue>
+    </objectIdentifier>
+    <objectCharacteristics>
+      <fixity>
+        <messageDigestAlgorithm>MD5</messageDigestAlgorithm>
+        <messageDigest>c823835ffbfe944dd9295b1a4b175d45</messageDigest>
       </fixity>
     </objectCharacteristics>
   </object>
   <event>
     <eventType>Git commit</eventType>
-    <eventDetail>Changed file 3.</eventDetail>
-    <eventDateTime>Mon Dec 22 07:06:48 2014 -0800</eventDateTime>
-    <linkingObjectIdentifier>
-      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
-      <linkingObjectIdentifierValue>file3.txt</linkingObjectIdentifierValue>
-    </linkingObjectIdentifier>
-  </event>
-  <event>
-    <eventType>Git commit</eventType>
-    <eventDetail>Updated file3.txt.</eventDetail>
-    <eventDateTime>Mon Dec 22 10:28:20 2014 -0800</eventDateTime>
-    <linkingObjectIdentifier>
-      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
-      <linkingObjectIdentifierValue>file3.txt</linkingObjectIdentifierValue>
-    </linkingObjectIdentifier>
-  </event>
-  <event>
-    <eventType>Git commit</eventType>
-    <eventDetail>Initial commit.</eventDetail>
-    <eventDateTime>Mon Dec 22 06:58:29 2014 -0800</eventDateTime>
-    <linkingObjectIdentifier>
-      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
-      <linkingObjectIdentifierValue>file3.txt</linkingObjectIdentifierValue>
-    </linkingObjectIdentifier>
-  </event>
-  <event>
-    <eventType>Git commit</eventType>
-    <eventDetail>Updated file1.txt.</eventDetail>
-    <eventDateTime>Mon Dec 22 10:28:11 2014 -0800</eventDateTime>
+    <eventDetail>Modified contents of file1.txt.</eventDetail>
+    <eventDateTime>2014-12-22 11:59:34 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
       <linkingObjectIdentifierValue>file1.txt</linkingObjectIdentifierValue>
@@ -301,7 +273,7 @@ we can create a simple PREMIS document like this:
   <event>
     <eventType>Git commit</eventType>
     <eventDetail>Initial commit.</eventDetail>
-    <eventDateTime>Mon Dec 22 06:58:29 2014 -0800</eventDateTime>
+    <eventDateTime>2014-12-22 11:59:02 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
       <linkingObjectIdentifierValue>file1.txt</linkingObjectIdentifierValue>
@@ -309,14 +281,33 @@ we can create a simple PREMIS document like this:
   </event>
   <event>
     <eventType>Git commit</eventType>
-    <eventDetail>Renamed file2.</eventDetail>
-    <eventDateTime>Mon Dec 22 07:07:37 2014 -0800</eventDateTime>
+    <eventDetail>Modified contents of file2.txt.</eventDetail>
+    <eventDateTime>2014-12-22 12:00:54 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
       <linkingObjectIdentifierValue>file2.txt</linkingObjectIdentifierValue>
     </linkingObjectIdentifier>
   </event>
+  <event>
+    <eventType>Git commit</eventType>
+    <eventDetail>Initial commit.</eventDetail>
+    <eventDateTime>2014-12-22 11:59:02 -0800</eventDateTime>
+    <linkingObjectIdentifier>
+      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
+      <linkingObjectIdentifierValue>file2.txt</linkingObjectIdentifierValue>
+    </linkingObjectIdentifier>
+  </event>
+  <event>
+    <eventType>Git commit</eventType>
+    <eventDetail>Renamed file3.txt to another_file.txt.</eventDetail>
+    <eventDateTime>2014-12-22 12:00:20 -0800</eventDateTime>
+    <linkingObjectIdentifier>
+      <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
+      <linkingObjectIdentifierValue>another_file.txt</linkingObjectIdentifierValue>
+    </linkingObjectIdentifier>
+  </event>
 </premis>
+
 
 ```
 
