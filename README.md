@@ -262,6 +262,10 @@ we can create a simple PREMIS document like this:
     </objectCharacteristics>
   </object>
   <event>
+    <eventIdentifier>
+      <eventIdentifierType>SHA1</eventIdentifierType>
+      <eventIdentifierValue>3ab47775c93f6e1b9dcc06ae905e5dba197b2a92</eventIdentifierValue>
+    </eventIdentifier>
     <eventType>Git commit</eventType>
     <eventDetail>Modified contents of file1.txt.</eventDetail>
     <eventDateTime>2014-12-22 11:59:34 -0800</eventDateTime>
@@ -271,6 +275,10 @@ we can create a simple PREMIS document like this:
     </linkingObjectIdentifier>
   </event>
   <event>
+    <eventIdentifier>
+      <eventIdentifierType>SHA1</eventIdentifierType>
+      <eventIdentifierValue>d0e95466a6e991bba23500d35dce2866e0ab5cec</eventIdentifierValue>
+    </eventIdentifier>
     <eventType>Git commit</eventType>
     <eventDetail>Initial commit.</eventDetail>
     <eventDateTime>2014-12-22 11:59:02 -0800</eventDateTime>
@@ -280,6 +288,10 @@ we can create a simple PREMIS document like this:
     </linkingObjectIdentifier>
   </event>
   <event>
+    <eventIdentifier>
+      <eventIdentifierType>SHA1</eventIdentifierType>
+      <eventIdentifierValue>425ff5654f0603a84100de34a265c38f40917b77</eventIdentifierValue>
+    </eventIdentifier>
     <eventType>Git commit</eventType>
     <eventDetail>Modified contents of file2.txt.</eventDetail>
     <eventDateTime>2014-12-22 12:00:54 -0800</eventDateTime>
@@ -289,6 +301,10 @@ we can create a simple PREMIS document like this:
     </linkingObjectIdentifier>
   </event>
   <event>
+    <eventIdentifier>
+      <eventIdentifierType>SHA1</eventIdentifierType>
+      <eventIdentifierValue>d0e95466a6e991bba23500d35dce2866e0ab5cec</eventIdentifierValue>
+    </eventIdentifier>
     <eventType>Git commit</eventType>
     <eventDetail>Initial commit.</eventDetail>
     <eventDateTime>2014-12-22 11:59:02 -0800</eventDateTime>
@@ -298,6 +314,10 @@ we can create a simple PREMIS document like this:
     </linkingObjectIdentifier>
   </event>
   <event>
+    <eventIdentifier>
+      <eventIdentifierType>SHA1</eventIdentifierType>
+      <eventIdentifierValue>4f48746998a83ce87aa6f7ae648018eb4a68fb45</eventIdentifierValue>
+    </eventIdentifier>
     <eventType>Git commit</eventType>
     <eventDetail>Renamed file3.txt to another_file.txt.</eventDetail>
     <eventDateTime>2014-12-22 12:00:20 -0800</eventDateTime>
@@ -307,8 +327,6 @@ we can create a simple PREMIS document like this:
     </linkingObjectIdentifier>
   </event>
 </premis>
-
-
 ```
 
 This PREMIS document is not complete, but it illustrates one possible application of GitBags.
