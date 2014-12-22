@@ -329,7 +329,7 @@ we can create a simple PREMIS document like this:
 </premis>
 ```
 
-This PREMIS document is not complete, but it illustrates one possible application of GitBags. Customize the [gitlog2premis.py]((https://github.com/mjordan/GitBags/blob/master/gitlog2premis.py) script to suit your PREMIS requirements.
+This PREMIS document is not complete, but it illustrates one possible application of GitBags. Customize the [gitlog2premis_sample.py]((https://github.com/mjordan/GitBags/blob/master/gitlog2premis_sample.py) script to suit your PREMIS requirements.
 
 
 ## License
