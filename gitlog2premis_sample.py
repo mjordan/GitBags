@@ -66,28 +66,23 @@ for file in files:
 
     object_identifier_element = doc.createElementNS(premis_ns, "objectIdentifier")
     object_element.appendChild(object_identifier_element)
-
     object_identifier_type_element = doc.createElementNS(premis_ns, "objectIdentifierType")
     object_identifier_type_element.appendChild(doc.createTextNode('URI'))
     object_identifier_element.appendChild(object_identifier_type_element)
-
     object_identifier_value_element = doc.createElementNS(premis_ns, "objectIdentifierValue")
     object_identifier_value_element.appendChild(doc.createTextNode(file[0]))
     object_identifier_element.appendChild(object_identifier_value_element)
 
     object_characteristics_element = doc.createElementNS(premis_ns, "objectCharacteristics")
-
     composition_level_element = doc.createElementNS(premis_ns, "compositionLevel")
     composition_level_element.appendChild(doc.createTextNode('0'))
     object_characteristics_element.appendChild(composition_level_element)
 
     fixity_element = doc.createElementNS(premis_ns, "fixity")
     object_characteristics_element.appendChild(fixity_element)
-
     message_digest_algorithm_element = doc.createElementNS(premis_ns, "messageDigestAlgorithm")
     message_digest_algorithm_element.appendChild(doc.createTextNode('MD5'))
     fixity_element.appendChild(message_digest_algorithm_element)
-
     md5 = hashlib.md5(file[0]).hexdigest()
     message_digest_element = doc.createElementNS(premis_ns, "messageDigest")
     message_digest_element.appendChild(doc.createTextNode(md5))
@@ -101,10 +96,6 @@ for file in files:
     format_designation_element.appendChild(format_name_element)
     format_element.appendChild(format_designation_element)
     object_characteristics_element.appendChild(format_element)
-    
-    message_digest_element.appendChild(doc.createTextNode(md5))
-    fixity_element.appendChild(message_digest_element)
-
 
     object_element.appendChild(object_characteristics_element)
 
@@ -123,11 +114,9 @@ for file in files:
 
         event_identifier_element = doc.createElementNS(premis_ns, "eventIdentifier")
         event_element.appendChild(event_identifier_element)
-
         event_identifier_type_element = doc.createElementNS(premis_ns, "eventIdentifierType")
         event_identifier_type_element.appendChild(doc.createTextNode('SHA-1'))
         event_identifier_element.appendChild(event_identifier_type_element)
-
         event_identifier_value_element = doc.createElementNS(premis_ns, "eventIdentifierValue")
         event_identifier_value_element.appendChild(doc.createTextNode(k))
         event_identifier_element.appendChild(event_identifier_value_element)
@@ -144,29 +133,24 @@ for file in files:
         event_detail_element.appendChild(doc.createTextNode(l[3]))
         event_element.appendChild(event_detail_element)
 
-        linking_object_identifier_element = doc.createElementNS(premis_ns, "linkingObjectIdentifier")
-
-        linking_object_identifier_type_element = doc.createElementNS(premis_ns, "linkingObjectIdentifierType")
-        linking_object_identifier_type_element.appendChild(doc.createTextNode('URI'))
-        event_element.appendChild(linking_object_identifier_type_element)
-        linking_object_identifier_element.appendChild(linking_object_identifier_type_element)
-
-        linking_object_identifier_value_element = doc.createElementNS(premis_ns, "linkingObjectIdentifierValue")
-        linking_object_identifier_value_element.appendChild(doc.createTextNode(file[0]))
-        linking_object_identifier_element.appendChild(linking_object_identifier_value_element)
-        event_element.appendChild(linking_object_identifier_element)
-
         linking_agent_identifier_element = doc.createElementNS(premis_ns, "linkingAgentIdentifier")
-
         linking_agent_identifier_type_element = doc.createElementNS(premis_ns, "linkingAgentIdentifierType")
         linking_agent_identifier_type_element.appendChild(doc.createTextNode('Email address'))
         linking_agent_identifier_element.appendChild(linking_agent_identifier_type_element)
-
         linking_agent_identifier_value_element = doc.createElementNS(premis_ns, "linkingAgentIdentifierValue")
         linking_agent_identifier_value_element.appendChild(doc.createTextNode(l[1]))
         linking_agent_identifier_element.appendChild(linking_agent_identifier_value_element)
         event_element.appendChild(linking_agent_identifier_element)
 
+        linking_object_identifier_element = doc.createElementNS(premis_ns, "linkingObjectIdentifier")
+        linking_object_identifier_type_element = doc.createElementNS(premis_ns, "linkingObjectIdentifierType")
+        linking_object_identifier_type_element.appendChild(doc.createTextNode('URI'))
+        event_element.appendChild(linking_object_identifier_type_element)
+        linking_object_identifier_element.appendChild(linking_object_identifier_type_element)
+        linking_object_identifier_value_element = doc.createElementNS(premis_ns, "linkingObjectIdentifierValue")
+        linking_object_identifier_value_element.appendChild(doc.createTextNode(file[0]))
+        linking_object_identifier_element.appendChild(linking_object_identifier_value_element)
+        event_element.appendChild(linking_object_identifier_element)
 
 
 # We create an agent element for each memeber of the agents dictionary populated above.
