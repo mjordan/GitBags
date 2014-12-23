@@ -19,10 +19,13 @@ import git
 import xml.dom.minidom
 import hashlib
 import argparse
+import mimetypes
 
 argparser = argparse.ArgumentParser()
 argparser.add_argument("git_bag_dir", help = "The GitBag directory")
 args = argparser.parse_args()
+
+mimetypes.init()
 
 if not os.path.exists(args.git_bag_dir):
     sys.exit("Sorry, %s doesn't appear to exist." % args.git_bag_dir)
@@ -37,7 +40,7 @@ repo_history = {}
 for file in files:
     file_history = {}
     # Get the log entries for the current file. We use || for easy parsing later.
-    file_result = git.log(file[0], reverse=True, date="iso", follow=True,
+    file_result = git.log(file[0], reverse=True, date="short", follow=True,
         pretty="format:%H || %an || %ae || %ad || %s") 
     # If there are multiple commits for a file, we need to split the entries into a list.
     file_result_list = file_result.split("\n")
@@ -49,12 +52,16 @@ for file in files:
     repo_history[file[0]] = file_history
 
 doc = xml.dom.minidom.Document()
-premis_element = doc.createElementNS("info:lc/xmlns/premis-v2", "premis")
+premis_element = doc.createElementNS(premis_ns, "premis")
+premis_element.setAttribute('xmlns', premis_ns)
+premis_element.setAttribute('xmlns:xsi', "http://www.w3.org/2001/XMLSchema-instance")
+premis_element.setAttribute('version', '2.2')
 doc.appendChild(premis_element)
 
 # We want to create an <object> element for each file.
 for file in files:
     object_element = doc.createElementNS(premis_ns, "object")
+    object_element.setAttribute('xsi:type', 'file')
     premis_element.appendChild(object_element)
 
     object_identifier_element = doc.createElementNS(premis_ns, "objectIdentifier")
@@ -69,7 +76,10 @@ for file in files:
     object_identifier_element.appendChild(object_identifier_value_element)
 
     object_characteristics_element = doc.createElementNS(premis_ns, "objectCharacteristics")
-    object_element.appendChild(object_characteristics_element)
+
+    composition_level_element = doc.createElementNS(premis_ns, "compositionLevel")
+    composition_level_element.appendChild(doc.createTextNode('0'))
+    object_characteristics_element.appendChild(composition_level_element)
 
     fixity_element = doc.createElementNS(premis_ns, "fixity")
     object_characteristics_element.appendChild(fixity_element)
@@ -82,6 +92,21 @@ for file in files:
     message_digest_element = doc.createElementNS(premis_ns, "messageDigest")
     message_digest_element.appendChild(doc.createTextNode(md5))
     fixity_element.appendChild(message_digest_element)
+
+    mime_type = mimetypes.guess_type(file[0])
+    format_element = doc.createElementNS(premis_ns, "format")
+    format_designation_element = doc.createElementNS(premis_ns, "formatDesignation")
+    format_name_element = doc.createElementNS(premis_ns, "formatName")
+    format_name_element.appendChild(doc.createTextNode(mime_type[0]))
+    format_designation_element.appendChild(format_name_element)
+    format_element.appendChild(format_designation_element)
+    object_characteristics_element.appendChild(format_element)
+    
+    message_digest_element.appendChild(doc.createTextNode(md5))
+    fixity_element.appendChild(message_digest_element)
+
+
+    object_element.appendChild(object_characteristics_element)
 
 # We want to create an <event> element for each commit. We also populate
 # a dictionay containing Agent information taken from the commit authors'
@@ -111,16 +136,15 @@ for file in files:
         event_type_element.appendChild(doc.createTextNode('Git commit'))
         event_element.appendChild(event_type_element)
 
-        event_detail_element = doc.createElementNS(premis_ns, "eventDetail")
-        event_detail_element.appendChild(doc.createTextNode(l[3]))
-        event_element.appendChild(event_detail_element)
-
         event_datetime_element = doc.createElementNS(premis_ns, "eventDateTime")
         event_datetime_element.appendChild(doc.createTextNode(l[2]))
         event_element.appendChild(event_datetime_element)
 
+        event_detail_element = doc.createElementNS(premis_ns, "eventDetail")
+        event_detail_element.appendChild(doc.createTextNode(l[3]))
+        event_element.appendChild(event_detail_element)
+
         linking_object_identifier_element = doc.createElementNS(premis_ns, "linkingObjectIdentifier")
-        event_element.appendChild(linking_object_identifier_element)
 
         linking_object_identifier_type_element = doc.createElementNS(premis_ns, "linkingObjectIdentifierType")
         linking_object_identifier_type_element.appendChild(doc.createTextNode('URI'))
@@ -130,9 +154,9 @@ for file in files:
         linking_object_identifier_value_element = doc.createElementNS(premis_ns, "linkingObjectIdentifierValue")
         linking_object_identifier_value_element.appendChild(doc.createTextNode(file[0]))
         linking_object_identifier_element.appendChild(linking_object_identifier_value_element)
+        event_element.appendChild(linking_object_identifier_element)
 
-        linking_agent_identifier_element = doc.createElementNS(premis_ns, "linkingAgentdentifier")
-        event_element.appendChild(linking_agent_identifier_element)
+        linking_agent_identifier_element = doc.createElementNS(premis_ns, "linkingAgentIdentifier")
 
         linking_agent_identifier_type_element = doc.createElementNS(premis_ns, "linkingAgentIdentifierType")
         linking_agent_identifier_type_element.appendChild(doc.createTextNode('Email address'))
@@ -141,13 +165,16 @@ for file in files:
         linking_agent_identifier_value_element = doc.createElementNS(premis_ns, "linkingAgentIdentifierValue")
         linking_agent_identifier_value_element.appendChild(doc.createTextNode(l[1]))
         linking_agent_identifier_element.appendChild(linking_agent_identifier_value_element)
+        event_element.appendChild(linking_agent_identifier_element)
+
+
 
 # We create an agent element for each memeber of the agents dictionary populated above.
 for email, name in agents.iteritems():
         agent_element = doc.createElementNS(premis_ns, "agent")
         premis_element.appendChild(agent_element)
 
-        agent_identifier_element = doc.createElementNS(premis_ns, "agentIdentifer")
+        agent_identifier_element = doc.createElementNS(premis_ns, "agentIdentifier")
         agent_element.appendChild(agent_identifier_element)
 
         agent_identifier_type_element = doc.createElementNS(premis_ns, "agentIdentifierType")
