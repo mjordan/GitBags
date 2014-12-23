@@ -224,41 +224,68 @@ we can create a simple PREMIS document like this:
 
 ```xml
 <?xml version="1.0" ?>
-<premis>
-  <object>
+<premis version="2.2" xmlns="info:lc/xmlns/premis-v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <object xsi:type="file">
     <objectIdentifier>
       <objectIdentifierType>URI</objectIdentifierType>
       <objectIdentifierValue>file1.txt</objectIdentifierValue>
     </objectIdentifier>
     <objectCharacteristics>
+      <compositionLevel>0</compositionLevel>
       <fixity>
         <messageDigestAlgorithm>MD5</messageDigestAlgorithm>
-        <messageDigest>bd01856bfd2065d0d1ee20c03bd3a9af</messageDigest>
+        <messageDigest>
+          bd01856bfd2065d0d1ee20c03bd3a9af
+          bd01856bfd2065d0d1ee20c03bd3a9af
+        </messageDigest>
       </fixity>
+      <format>
+        <formatDesignation>
+          <formatName>text/plain</formatName>
+        </formatDesignation>
+      </format>
     </objectCharacteristics>
   </object>
-  <object>
+  <object xsi:type="file">
     <objectIdentifier>
       <objectIdentifierType>URI</objectIdentifierType>
       <objectIdentifierValue>file2.txt</objectIdentifierValue>
     </objectIdentifier>
     <objectCharacteristics>
+      <compositionLevel>0</compositionLevel>
       <fixity>
         <messageDigestAlgorithm>MD5</messageDigestAlgorithm>
-        <messageDigest>273604bfeef7126abe1f9bff1e45126c</messageDigest>
+        <messageDigest>
+          273604bfeef7126abe1f9bff1e45126c
+          273604bfeef7126abe1f9bff1e45126c
+        </messageDigest>
       </fixity>
+      <format>
+        <formatDesignation>
+          <formatName>text/plain</formatName>
+        </formatDesignation>
+      </format>
     </objectCharacteristics>
   </object>
-  <object>
+  <object xsi:type="file">
     <objectIdentifier>
       <objectIdentifierType>URI</objectIdentifierType>
       <objectIdentifierValue>another_file.txt</objectIdentifierValue>
     </objectIdentifier>
     <objectCharacteristics>
+      <compositionLevel>0</compositionLevel>
       <fixity>
         <messageDigestAlgorithm>MD5</messageDigestAlgorithm>
-        <messageDigest>c823835ffbfe944dd9295b1a4b175d45</messageDigest>
+        <messageDigest>
+          c823835ffbfe944dd9295b1a4b175d45
+          c823835ffbfe944dd9295b1a4b175d45
+        </messageDigest>
       </fixity>
+      <format>
+        <formatDesignation>
+          <formatName>text/plain</formatName>
+        </formatDesignation>
+      </format>
     </objectCharacteristics>
   </object>
   <event>
@@ -267,16 +294,16 @@ we can create a simple PREMIS document like this:
       <eventIdentifierValue>3ab47775c93f6e1b9dcc06ae905e5dba197b2a92</eventIdentifierValue>
     </eventIdentifier>
     <eventType>Git commit</eventType>
+    <eventDateTime>2014-12-22</eventDateTime>
     <eventDetail>Modified contents of file1.txt.</eventDetail>
-    <eventDateTime>2014-12-22 11:59:34 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
       <linkingObjectIdentifierValue>file1.txt</linkingObjectIdentifierValue>
     </linkingObjectIdentifier>
-    <linkingAgentdentifier>
+    <linkingAgentIdentifier>
       <linkingAgentIdentifierType>Email address</linkingAgentIdentifierType>
       <linkingAgentIdentifierValue>mjordan@sfu.ca</linkingAgentIdentifierValue>
-    </linkingAgentdentifier>
+    </linkingAgentIdentifier>
   </event>
   <event>
     <eventIdentifier>
@@ -284,16 +311,16 @@ we can create a simple PREMIS document like this:
       <eventIdentifierValue>d0e95466a6e991bba23500d35dce2866e0ab5cec</eventIdentifierValue>
     </eventIdentifier>
     <eventType>Git commit</eventType>
+    <eventDateTime>2014-12-22</eventDateTime>
     <eventDetail>Initial commit.</eventDetail>
-    <eventDateTime>2014-12-22 11:59:02 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
       <linkingObjectIdentifierValue>file1.txt</linkingObjectIdentifierValue>
     </linkingObjectIdentifier>
-    <linkingAgentdentifier>
+    <linkingAgentIdentifier>
       <linkingAgentIdentifierType>Email address</linkingAgentIdentifierType>
       <linkingAgentIdentifierValue>mjordan@sfu.ca</linkingAgentIdentifierValue>
-    </linkingAgentdentifier>
+    </linkingAgentIdentifier>
   </event>
   <event>
     <eventIdentifier>
@@ -301,16 +328,16 @@ we can create a simple PREMIS document like this:
       <eventIdentifierValue>425ff5654f0603a84100de34a265c38f40917b77</eventIdentifierValue>
     </eventIdentifier>
     <eventType>Git commit</eventType>
+    <eventDateTime>2014-12-22</eventDateTime>
     <eventDetail>Modified contents of file2.txt.</eventDetail>
-    <eventDateTime>2014-12-22 12:00:54 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
       <linkingObjectIdentifierValue>file2.txt</linkingObjectIdentifierValue>
     </linkingObjectIdentifier>
-    <linkingAgentdentifier>
+    <linkingAgentIdentifier>
       <linkingAgentIdentifierType>Email address</linkingAgentIdentifierType>
       <linkingAgentIdentifierValue>mjordan@sfu.ca</linkingAgentIdentifierValue>
-    </linkingAgentdentifier>
+    </linkingAgentIdentifier>
   </event>
   <event>
     <eventIdentifier>
@@ -318,16 +345,16 @@ we can create a simple PREMIS document like this:
       <eventIdentifierValue>d0e95466a6e991bba23500d35dce2866e0ab5cec</eventIdentifierValue>
     </eventIdentifier>
     <eventType>Git commit</eventType>
+    <eventDateTime>2014-12-22</eventDateTime>
     <eventDetail>Initial commit.</eventDetail>
-    <eventDateTime>2014-12-22 11:59:02 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
       <linkingObjectIdentifierValue>file2.txt</linkingObjectIdentifierValue>
     </linkingObjectIdentifier>
-    <linkingAgentdentifier>
+    <linkingAgentIdentifier>
       <linkingAgentIdentifierType>Email address</linkingAgentIdentifierType>
       <linkingAgentIdentifierValue>mjordan@sfu.ca</linkingAgentIdentifierValue>
-    </linkingAgentdentifier>
+    </linkingAgentIdentifier>
   </event>
   <event>
     <eventIdentifier>
@@ -335,26 +362,25 @@ we can create a simple PREMIS document like this:
       <eventIdentifierValue>4f48746998a83ce87aa6f7ae648018eb4a68fb45</eventIdentifierValue>
     </eventIdentifier>
     <eventType>Git commit</eventType>
+    <eventDateTime>2014-12-22</eventDateTime>
     <eventDetail>Renamed file3.txt to another_file.txt.</eventDetail>
-    <eventDateTime>2014-12-22 12:00:20 -0800</eventDateTime>
     <linkingObjectIdentifier>
       <linkingObjectIdentifierType>URI</linkingObjectIdentifierType>
       <linkingObjectIdentifierValue>another_file.txt</linkingObjectIdentifierValue>
     </linkingObjectIdentifier>
-    <linkingAgentdentifier>
+    <linkingAgentIdentifier>
       <linkingAgentIdentifierType>Email address</linkingAgentIdentifierType>
       <linkingAgentIdentifierValue>mjordan@sfu.ca</linkingAgentIdentifierValue>
-    </linkingAgentdentifier>
+    </linkingAgentIdentifier>
   </event>
   <agent>
-    <agentIdentifer>
+    <agentIdentifier>
       <agentIdentifierType>Email address</agentIdentifierType>
       <agentIdentifierValue>mjordan@sfu.ca</agentIdentifierValue>
-    </agentIdentifer>
+    </agentIdentifier>
     <agentName>Mark Jordan</agentName>
   </agent>
 </premis>
-
 ```
 
 This PREMIS document is not complete, but it illustrates one possible application of GitBags. It would be fairly easy to enhance the [gitlog2premis_sample.py](https://github.com/mjordan/GitBags/blob/master/gitlog2premis_sample.py) script to generate more complete PREMIS documents.
